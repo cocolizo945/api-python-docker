@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  postgres_flask:
+    image: postgres:12-bullseye
+    container_name: postgres_flask    
+    restart: always
+    ports:
+      - "5450:5432"
+    env_file:
+      - .env  
+    environment:
+      - DATABASE_HOST=127.0.0.1
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=social
+      - POSTGRES_DB=hive_flask
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - pgdatamovies:/var/lib/postgresql/data
+    networks:
+      - postgres_flask       
+  apipy:
+    container_name: apipyflask
+    build: .
+    depends_on:
+      - postgres_flask
+    stdin_open: true
+    tty: true
+    env_file:
+      - .env
+    command: python src/app.py 0.0.0.0:85
+    ports:
+      - "8030:85"
+    volumes:
+      - .:/appflask
+    environment:
+      FLASK_DEBUG: development
+    networks:
+      - postgres_flask 
+networks:
+  postgres_flask:
+    name: postgres_flask
+    driver: bridge
+volumes:
+  pgdatamovies:
+  
