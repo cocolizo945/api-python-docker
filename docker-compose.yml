@@ -12,11 +12,11 @@ services:
     environment:
       - DATABASE_HOST=127.0.0.1
       - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=social
-      - POSTGRES_DB=hive_flask
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=hospital
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
-      - pgdatamovies:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
     networks:
       - postgres_flask       
   apipy:
@@ -42,5 +42,5 @@ networks:
     name: postgres_flask
     driver: bridge
 volumes:
-  pgdatamovies:
+  pgdata:
   
