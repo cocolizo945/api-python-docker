@@ -4,13 +4,12 @@ from flask_cors import CORS
 from config import config
 
 # Routes
-from routes import Users
-from routes import Task
+from routes import Hospital_Form
 from routes import Users2
-
+ 
 app = Flask(__name__)
 
-CORS(app, resources={"*": {"origins": "http://localhost:9300"}})
+CORS(app, resources={"*": {"origins": "http://localhost:12000"}})
 
 
 def page_not_found(error):
@@ -21,9 +20,8 @@ if __name__ == '__main__':
     app.config.from_object(config['development'])
 
     # Blueprints
-    app.register_blueprint(Users.main, url_prefix='/api/users')
-    app.register_blueprint(Task.main, url_prefix='/api/tasks')
     app.register_blueprint(Users2.main, url_prefix ='/api/users2')
+    app.register_blueprint(Hospital_Form.main, url_prefix = '/api/formHospital')
     
 
     # Error handlers
